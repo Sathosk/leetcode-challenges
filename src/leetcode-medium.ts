@@ -1,7 +1,5 @@
 // https://leetcode.com/problems/unique-length-3-palindromic-subsequences/
 
-const s = "adc"
-
 const countPalindromicSubsequence = function(s: string): number {
     const letterArray = s.split('')
     let uniquePalindromeQuantity = 0
@@ -33,5 +31,3 @@ const countPalindromicSubsequence = function(s: string): number {
 
     return uniquePalindromeQuantity
 };
-
-console.log(countPalindromicSubsequence(s))
