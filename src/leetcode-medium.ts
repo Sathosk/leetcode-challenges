@@ -31,3 +31,42 @@ const countPalindromicSubsequence = function(s: string): number {
 
     return uniquePalindromeQuantity
 };
+
+// https://leetcode.com/problems/shifting-letters-ii/description/
+
+function shiftingLetters(s: string, shifts: number[][]): string {
+  const stringLength = s.length;
+  const diff = Array(stringLength + 1).fill(0);
+  
+  // Populate the difference array
+  for (const [start, end, direction] of shifts) {
+      if (direction === 1) {
+          diff[start] += 1;
+          diff[end + 1] -= 1;
+      } else {
+          diff[start] -= 1;
+          diff[end + 1] += 1;
+      }
+  }
+
+  // Compute the net shifts using prefix sum
+  const netShifts = Array(stringLength).fill(0);
+  let shift = 0;
+  for (let i = 0; i < stringLength; i++) {
+      shift += diff[i];
+      netShifts[i] = shift;
+  }
+
+  // Apply the shifts to the string
+  const aCode = 'a'.charCodeAt(0);
+  const alphabetLength = 26; // Number of letters in the alphabet
+
+  const result = [...s].map((char, i) => {
+      const charCode = char.charCodeAt(0);
+      const newCharCode = ((charCode - aCode + netShifts[i]) % alphabetLength + alphabetLength) % alphabetLength + aCode;
+      
+      return String.fromCharCode(newCharCode);
+  });
+
+  return result.join('');
+}
